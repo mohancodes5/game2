@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#e94560" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Sketch-Guess Duel</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="top-bar">
+      <h1>Sketch-Guess Duel</h1>
+      <p class="tagline">3 players · async · comedy over skill</p>
+    </header>
+
+    <!-- Home -->
+    <section id="screen-home" class="screen active">
+      <div class="card">
+        <p class="lead">Play in order: <strong>Draw → Add → Guess</strong>. Each artist gets <strong>5 seconds</strong>.</p>
+        <button type="button" class="btn primary" id="btn-new-game">New game (I’m Player 1)</button>
+        <button type="button" class="btn secondary" id="btn-join-game">Join with code</button>
+        <button type="button" class="btn ghost" id="btn-local-demo">Local demo (same phone, 3 turns)</button>
+      </div>
+      <p class="hint firebase-hint" id="firebase-status"></p>
+    </section>
+
+    <!-- Join -->
+    <section id="screen-join" class="screen">
+      <div class="card">
+        <label for="join-code">Game code</label>
+        <input type="text" id="join-code" inputmode="text" autocomplete="off" maxlength="8" placeholder="e.g. ABC12" />
+        <p class="small">Use the link your friend sent, or enter the code and we’ll open the right turn.</p>
+        <button type="button" class="btn primary" id="btn-join-submit">Join game</button>
+        <button type="button" class="btn ghost" data-back="home">Back</button>
+      </div>
+    </section>
+
+    <!-- Waiting / invite -->
+    <section id="screen-wait" class="screen">
+      <div class="card">
+        <p id="wait-message"></p>
+        <div class="code-box" id="game-code-display"></div>
+        <p class="small" id="invite-instructions"></p>
+        <textarea id="invite-link" class="invite-ta" readonly rows="3"></textarea>
+        <button type="button" class="btn secondary" id="btn-copy-invite">Copy invite</button>
+        <button type="button" class="btn ghost" data-back="home">Home</button>
+      </div>
+    </section>
+
+    <!-- Phase 1: draw from prompt -->
+    <section id="screen-p1" class="screen">
+      <div class="card tight">
+        <div class="prompt-banner" id="p1-prompt"></div>
+        <div class="timer" id="p1-timer">5</div>
+        <canvas id="canvas-p1" class="draw-canvas" width="320" height="400"></canvas>
+        <p class="small">Draw the <strong>essence</strong> only—you only have 5 seconds!</p>
+        <button type="button" class="btn primary" id="btn-p1-done" disabled>Submit drawing</button>
+      </div>
+    </section>
+
+    <!-- Phase 2: add without knowing prompt -->
+    <section id="screen-p2" class="screen">
+      <div class="card tight">
+        <p class="phase-title">Player 2 — add lines</p>
+        <p class="small">You don’t know the original prompt. Build on what you see.</p>
+        <div class="timer" id="p2-timer">5</div>
+        <canvas id="canvas-p2" class="draw-canvas" width="320" height="400"></canvas>
+        <button type="button" class="btn primary" id="btn-p2-done" disabled>Submit</button>
+      </div>
+    </section>
+
+    <!-- Phase 3: guess -->
+    <section id="screen-p3" class="screen">
+      <div class="card tight">
+        <p class="phase-title">Player 3 — guess the prompt</p>
+        <canvas id="canvas-p3" class="draw-canvas readonly" width="320" height="400"></canvas>
+        <label for="p3-guess">Your guess</label>
+        <input type="text" id="p3-guess" autocomplete="off" placeholder="What was the original idea?" />
+        <button type="button" class="btn primary" id="btn-p3-done">Submit guess</button>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="screen-result" class="screen">
+      <div class="card">
+        <h2>Round over</h2>
+        <p><strong>Real prompt:</strong> <span id="result-prompt"></span></p>
+        <p><strong>Player 3 guessed:</strong> <span id="result-guess"></span></p>
+        <canvas id="canvas-result" class="draw-canvas" width="320" height="400"></canvas>
+        <p class="small gallery-hint">Screenshot the canvas to share (Gallery feature = save to camera roll).</p>
+        <button type="button" class="btn primary" id="btn-play-again">Play again</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

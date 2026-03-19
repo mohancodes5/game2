@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Friend groups: open read/write. For stricter rules, add Firebase Auth.
+    match /sketchGuessGames/{gameId} {
+      allow read, write: if true;
+    }
+  }
+}

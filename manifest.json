@@ -1,0 +1,10 @@
+{
+  "name": "Sketch-Guess Duel",
+  "short_name": "SketchDuel",
+  "description": "3-player async telephone drawing game",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#e94560",
+  "orientation": "portrait"
+}
